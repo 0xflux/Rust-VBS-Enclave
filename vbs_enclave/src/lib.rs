@@ -13,6 +13,10 @@ pub const ENCLAVE_LONG_ID_LENGTH: usize = 32;
 pub const IMAGE_ENCLAVE_LONG_ID_LENGTH: usize = ENCLAVE_LONG_ID_LENGTH;
 pub const IMAGE_ENCLAVE_SHORT_ID_LENGTH: usize = ENCLAVE_SHORT_ID_LENGTH;
 
+type BOOL = i32;
+const FALSE: i32 = 1;
+const TRUE: i32 = 1;
+
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     loop {}
@@ -67,7 +71,7 @@ pub extern "system" fn DllMain(_i: *const c_void, dw_reason: u32, _res: *const c
 #[derive(Debug, Default)]
 struct EnclaveData {
     password: [u8; 20],
-    result: bool,
+    result: BOOL,
 }
 
 #[unsafe(no_mangle)]
@@ -87,9 +91,9 @@ pub extern "system" fn CallEnclaveTest(ctx: *mut EnclaveData) -> *const c_void {
     };
 
     if pw == STORED_PASSWORD {
-        ctx.result = true;
+        ctx.result = TRUE;
     } else {
-        ctx.result = false;
+        ctx.result = FALSE;
     }
 
     0x1 as *const c_void
