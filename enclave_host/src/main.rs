@@ -91,7 +91,7 @@ struct EnclaveInitInfoVbs {
 #[derive(Debug, Default)]
 struct EnclaveData {
     password: [u8; 20],
-    result: BOOL,
+    result: bool,
 }
 
 // type CallEnclaveTest = unsafe extern "system" fn(ctx: *const c_void) -> *const c_void;
@@ -176,7 +176,7 @@ fn run_enclave() -> Result<(), ProgramError> {
         };
 
         let mut input = EnclaveData::default();
-        input.result = FALSE;
+        input.result = false;
         let correct_password = "FluxIsAwesome".as_bytes();
         let incorrect_password = "Test".as_bytes();
         input.password[..correct_password.len()].copy_from_slice(correct_password);
@@ -197,7 +197,7 @@ fn run_enclave() -> Result<(), ProgramError> {
             return Err(ProgramError::FailedToCallFunction);
         };
 
-        if input.result == TRUE {
+        if input.result == true {
             println!("[+] Congrats you guessed the password!");
         } else {
             println!("[-] Sorry that password was incorrect!");
