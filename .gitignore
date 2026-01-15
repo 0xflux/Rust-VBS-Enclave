@@ -1,0 +1,4 @@
+enclave_host/target/*
+enclave_host/Cargo.lock
+vbs_enclave/target/*
+vbs_enclave/Cargo.lock
